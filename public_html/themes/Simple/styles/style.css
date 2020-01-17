@@ -1,0 +1,16 @@
+body {
+  font-family: "Ubuntu", "MuseoSans","Source Sans Pro";
+  font-size: unset;
+}
+
+.navbar .home {
+  white-space: nowrap;
+}
+
+.red {
+  color: red;
+}
+
+.hide {
+  display: none !important;
+}

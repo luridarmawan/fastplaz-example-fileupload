@@ -1,0 +1,65 @@
+
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+      <div class="container">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1 class="m-0 text-dark"> File Upload Handler <small>Example</small></h1>
+          </div><!-- /.col -->
+          <div class="col-sm-6">
+            <!-- breadcrumb -->
+          </div><!-- /.col -->
+        </div><!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+
+    <!-- Main content -->
+    <div class="content">
+      
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="card">
+              <form id="frmUpload" role="form" method="POST" enctype="multipart/form-data">
+              <div class="card-body">
+                <p class="card-text">
+                  Contoh penggunaan <a href="https://fastplazz.com">FastPlaz</a> untuk menangani proses unggah (<i>upload</i>) file.
+                  <br>File yang diperbolehkan: .jpg, .jpeg, .png
+                </p>
+                <div class="form-group">
+                  <label for="exampleInputFile">File input</label>
+                  <div class="input-group">
+                    <input type="file" name="file1" class="">                    
+                  </div>
+                </div>
+              </div>
+              <div class="card-footer">
+                <button type="submit" class="btn btn-primary">Submit</button>
+                <span>&nbsp;</span>
+                <span class="small red">[$msg]</span>
+
+                [if $FileUpload neq ""]
+                 Last uploaded file: <a href="./uploads/[$FileUpload]" target=_blank>[$FileUpload]</a>
+                [/if]
+                
+              </div>
+              </form> 
+
+            </div>
+          </div>          
+        </div>
+      </div>
+
+      <!-- file list -->
+      <div class="container">
+      </div>
+      <!-- /file list -->
+
+    </div>
+    <!-- /.content -->
+
+<script type="text/javascript">
+  $(document).ready(function () {
+  });
+</script>

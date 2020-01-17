@@ -1,0 +1,36 @@
+stages:
+  - build
+  - test
+  - deploy
+
+before_script:
+  - mkdir -p ~/.ssh
+  - chmod 700 ~/.ssh
+  - eval $(ssh-agent -s)
+  - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
+  - ssh-add <(echo "$PRODUCTION_SSH_KEY")
+  - '# Update source'
+  - ssh ubuntu@$PRODUCTION_HOST "sudo su - apix -c 'cd $FASTPLAZ_PATH && git pull origin development'"
+  - ssh ubuntu@$PRODUCTION_HOST "sudo su - apix -c 'cd $SOURCE_PATH && git pull origin development'"
+
+test_production:
+  stage: test
+  image: registry.gitlab.com/luridarmawan/smartfarm
+  script:
+    - '# TEST PASSED .... (dummy)'
+
+build_station:
+  stage: deploy
+  image: luri/ssh-client
+  script:
+    - '# Compiling & Build Station Application Module'
+    - ssh ubuntu@$PRODUCTION_HOST "sudo su - smartfarm -c 'cd $SOURCE_PATH/source && ./build.sh station'"
+  when: manual
+
+build_node:
+  stage: deploy
+  image: luri/ssh-client
+  script:
+    - '# Compiling & Build Node & History Application Module'
+    - ssh ubuntu@$PRODUCTION_HOST "sudo su - smartfarm -c 'cd $SOURCE_PATH/source && ./build.sh node'"
+  when: manual

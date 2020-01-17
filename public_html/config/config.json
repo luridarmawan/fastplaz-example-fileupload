@@ -1,0 +1,42 @@
+{
+  "systems" : {
+    "sitename" : "File Upload Handler Example",
+    "slogan" : "File Upload Handler Example",
+    "baseurl" : "",
+    "admin_email" : "luridarmawan@gmail.com",
+    "development" : true,
+    "debug" : true,
+    "module_default" : "main",
+    "language_default" : "id",
+    "theme_enable" : true,
+    "theme" : "Simple",
+    "cache" : "none",
+    "temp" : "ztemp",
+    "error_url" : "\/",
+    "session_timeout" : 0,
+    "error_redirect" : false
+  },
+  "database" : {
+    "default" : {
+      "driver" : "MySQL 5.7",
+      "hostname" : "localhost",
+      "port" : "",
+      "username" : "root",
+      "password" : "root",
+      "database_name" : "carik",
+      "charset" : "",
+      "prefix" : "",
+      "library" : ""
+    }
+  },
+  "mailer" : {
+    "default" : {
+      "hostname" : "your.smtp.server",
+      "username" : "your_username",
+      "password" : "the_password",
+      "smtp_port" : "465",
+      "ssl" : true,
+      "tls" : true
+    }
+  }
+}
