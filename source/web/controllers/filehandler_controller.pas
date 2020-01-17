@@ -32,7 +32,7 @@ uses theme_controller, common;
 
 const
   UPLOAD_FOLDERS = 'uploads/';
-  permittedFileType: array [0..2] of string = ('.jpg', '.jpeg', '.png');
+  permittedFileType: array [0..3] of string = ('.jpg', '.jpeg', '.png', '.pdf');
 
 constructor TFilehandlerController.CreateNew(AOwner: TComponent; CreateMode: integer);
 begin
