@@ -35,7 +35,7 @@
         <PackageName Value="fastplaz_runtime"/>
       </Item2>
     </RequiredPackages>
-    <Units Count="3">
+    <Units Count="4">
       <Unit0>
         <Filename Value="filehandler.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -48,6 +48,10 @@
         <Filename Value="controllers/filehandler_controller.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit2>
+      <Unit3>
+        <Filename Value="controllers/download_controller.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit3>
     </Units>
   </ProjectOptions>
   <CompilerOptions>

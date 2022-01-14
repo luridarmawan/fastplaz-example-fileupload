@@ -9,9 +9,10 @@ uses
 
 implementation
 
-uses filehandler_controller;
+uses filehandler_controller, download_controller;
 
 initialization
+  Route[ '/download/(?P<filename>.*)'] := TDownloadController;
   Route[ '/'] := TFilehandlerController; // Main Controller
 
 end.

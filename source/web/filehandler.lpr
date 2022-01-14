@@ -4,7 +4,8 @@ program filehandler;
 
 uses
   {$IFNDEF Windows}cthreads,{$ENDIF}
-  fpcgi, sysutils, fastplaz_handler, common, filehandler_controller, filehandler_routes;
+  fpcgi, sysutils, fastplaz_handler, common, filehandler_controller,
+  filehandler_routes, download_controller;
 
 {$R *.res}
 

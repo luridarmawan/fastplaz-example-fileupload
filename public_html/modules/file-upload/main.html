@@ -24,7 +24,7 @@
               <form id="frmUpload" role="form" method="POST" enctype="multipart/form-data">
               <div class="card-body">
                 <p class="card-text">
-                  Contoh penggunaan <a href="https://fastplazz.com">FastPlaz</a> untuk menangani proses unggah (<i>upload</i>) file.
+                  Contoh penggunaan <a href="https://fastplazz.com">FastPlaz</a> untuk menangani proses unggah (<i>upload</i>) dan unduh (<i>download</i>) file.
                   <br>File yang diperbolehkan: .jpg, .jpeg, .png
                 </p>
                 <div class="form-group">
@@ -40,7 +40,7 @@
                 <span class="small red">[$msg]</span>
 
                 [if $FileUpload neq ""]
-                 Last uploaded file: <a href="./uploads/[$FileUpload]" target=_blank>[$FileUpload]</a>
+                 Last uploaded file: <a href="[$baseurl]uploads/[$FileUpload]" target=_blank>[$FileUpload]</a>. You can <a href="[$baseurl]download/[$FileUpload]">Downloard Here.</a>
                 [/if]
                 
               </div>
