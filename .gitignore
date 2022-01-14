@@ -210,9 +210,14 @@ dist
 *.o
 
 backup/
+public_html/*.tmp
+public_html/uploads/*.jpeg
+public_html/uploads/*.jpg
+public_html/uploads/*.png
 public_html/ztemp/cache/*.txt
 public_html/ztemp/error_log/*log
 public_html/ztemp/sessions/*ses
+source/web/lib/
 
 *.dll
 *.exe
