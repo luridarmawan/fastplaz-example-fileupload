@@ -5,8 +5,8 @@ unit download_controller;
 interface
 
 uses
-  Classes, SysUtils, html_lib, fpcgi, fpjson, json_lib, HTTPDefs, 
-    fastplaz_handler, database_lib, string_helpers, dateutils, datetime_helpers;
+  Classes, SysUtils, html_lib, fpcgi, fpjson, json_lib, HTTPDefs,
+  fastplaz_handler, database_lib, string_helpers, dateutils, datetime_helpers;
 
 type
   TDownloadController = class(TMyCustomController)
@@ -27,8 +27,7 @@ uses theme_controller, common;
 const
   UPLOAD_FOLDERS = 'uploads/';
 
-constructor TDownloadController.CreateNew(AOwner: TComponent; 
-  CreateMode: integer);
+constructor TDownloadController.CreateNew(AOwner: TComponent; CreateMode: integer);
 begin
   inherited CreateNew(AOwner, CreateMode);
   BeforeRequest := @BeforeRequestHandler;
@@ -40,7 +39,7 @@ begin
 end;
 
 // Init First
-procedure TDownloadController.BeforeRequestHandler(Sender: TObject; 
+procedure TDownloadController.BeforeRequestHandler(Sender: TObject;
   ARequest: TRequest);
 begin
 end;
@@ -51,7 +50,9 @@ var
   fileName: string;
   imgStream: TFileStream;
 begin
-  fileName:= _GET['filename'];
+  //TODO: Check Priviledge
+
+  fileName := _GET['filename'];
   if fileName.IsEmpty then
     Die('Invalid Request');
   if not FileExists(UPLOAD_FOLDERS + fileName) then
@@ -60,7 +61,7 @@ begin
   imgStream := TFileStream.Create(UPLOAD_FOLDERS + fileName, fmOpenRead);
   Response.ContentStream := imgStream;
 
-  Response.ContentType:= 'image/' + ExtractFileExt(fileName);
+  Response.ContentType := 'image/' + ExtractFileExt(fileName);
   Response.SendContent;
 
   imgStream.Free;
@@ -73,4 +74,5 @@ begin
 end;
 
 end.
+
 
