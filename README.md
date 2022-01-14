@@ -1,7 +1,7 @@
 # File Upload Handler dengan FastPlaz
 
 
-Repositori ini berisi contoh sederhana penggunaan [FastPlaz](https://fastplaz.com) sebagai handler terhadap proses upload file di web.
+Repositori ini berisi contoh sederhana penggunaan [FastPlaz](https://fastplaz.com) sebagai handler terhadap proses upload file di web. Ditambah juga contoh handling jika suatu saat diperlukan proses *force download* suatu file.
 
 Contoh *live* ada di [https://examples.fastplaz.com/file-upload/](https://examples.fastplaz.com/file-upload/)
 
