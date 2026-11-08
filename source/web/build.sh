@@ -15,9 +15,8 @@ if [ ! -f $PROJECTFILE ]; then
     exit 1
 fi
 
-if [ ! -d lib ]; then
-    mkdir lib
-fi
+TARGET=$(fpc -iTP)-$(fpc -iTO)
+mkdir -p lib/$TARGET
 
 fpc $PROJECTFILE -o../../public_html/$PROJECTBASE.bin @extra.cfg
 
