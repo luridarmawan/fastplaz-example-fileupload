@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CONFIG>
   <ProjectOptions>
-    <Version Value="11"/>
+    <Version Value="12"/>
+    <PathDelim Value="\"/>
     <General>
       <Flags>
         <MainUnitHasCreateFormStatements Value="False"/>
+        <MainUnitHasTitleStatement Value="False"/>
+        <MainUnitHasScaledStatement Value="False"/>
       </Flags>
       <SessionStorage Value="InProjectDir"/>
-      <MainUnit Value="0"/>
-      <Title Value="File Upload Handler Examper"/>
+      <Title Value="File Upload Handler Example"/>
       <UseAppBundle Value="False"/>
       <ResourceType Value="res"/>
     </General>
@@ -16,8 +18,8 @@
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
     </VersionInfo>
-    <BuildModes Count="1">
-      <Item1 Name="Default" Default="True"/>
+    <BuildModes>
+      <Item Name="Default" Default="True"/>
     </BuildModes>
     <PublishOptions>
       <Version Value="2"/>
@@ -25,44 +27,45 @@
     </PublishOptions>
     <RunParams>
       <FormatVersion Value="2"/>
-      <Modes Count="0"/>
     </RunParams>
-    <RequiredPackages Count="2">
-      <Item1>
-        <PackageName Value="LCL"/>
-      </Item1>
-      <Item2>
+    <RequiredPackages>
+      <Item>
         <PackageName Value="fastplaz_runtime"/>
-      </Item2>
+      </Item>
     </RequiredPackages>
-    <Units Count="4">
-      <Unit0>
+    <Units>
+      <Unit>
         <Filename Value="filehandler.lpr"/>
         <IsPartOfProject Value="True"/>
-      </Unit0>
-      <Unit1>
-        <Filename Value="routes/filehandler_routes.pas"/>
+      </Unit>
+      <Unit>
+        <Filename Value="routes\filehandler_routes.pas"/>
         <IsPartOfProject Value="True"/>
-      </Unit1>
-      <Unit2>
-        <Filename Value="controllers/filehandler_controller.pas"/>
+      </Unit>
+      <Unit>
+        <Filename Value="controllers\filehandler_controller.pas"/>
         <IsPartOfProject Value="True"/>
-      </Unit2>
-      <Unit3>
-        <Filename Value="controllers/download_controller.pas"/>
+      </Unit>
+      <Unit>
+        <Filename Value="controllers\download_controller.pas"/>
         <IsPartOfProject Value="True"/>
-      </Unit3>
+      </Unit>
+      <Unit>
+        <Filename Value="controllers\fileupload_lib.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
     <Version Value="11"/>
+    <PathDelim Value="\"/>
     <Target>
-      <Filename Value="../../public_html/filehandler.bin" ApplyConventions="False"/>
+      <Filename Value="..\..\public_html\filehandler.bin" ApplyConventions="False"/>
     </Target>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir)"/>
       <OtherUnitFiles Value="routes;controllers"/>
-      <UnitOutputDirectory Value="lib/$(TargetCPU)-$(TargetOS)"/>
+      <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
     </SearchPaths>
     <Other>
       <ConfigFile>
@@ -71,16 +74,16 @@
     </Other>
   </CompilerOptions>
   <Debugging>
-    <Exceptions Count="3">
-      <Item1>
+    <Exceptions>
+      <Item>
         <Name Value="EAbort"/>
-      </Item1>
-      <Item2>
+      </Item>
+      <Item>
         <Name Value="ECodetoolError"/>
-      </Item2>
-      <Item3>
+      </Item>
+      <Item>
         <Name Value="EFOpenError"/>
-      </Item3>
+      </Item>
     </Exceptions>
   </Debugging>
 </CONFIG>

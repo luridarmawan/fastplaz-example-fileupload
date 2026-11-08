@@ -22,10 +22,12 @@
           <div class="col-lg-12">
             <div class="card">
               <form id="frmUpload" role="form" method="POST" enctype="multipart/form-data">
+              <input type="hidden" name="__formid" value="frmUpload">
+              [csrf-token name="frmUpload"]
               <div class="card-body">
                 <p class="card-text">
                   Contoh penggunaan <a href="https://fastplazz.com">FastPlaz</a> untuk menangani proses unggah (<i>upload</i>) dan unduh (<i>download</i>) file.
-                  <br>File yang diperbolehkan: .jpg, .jpeg, .png
+                  <br>File yang diperbolehkan: .jpg, .jpeg, .png, .pdf
                 </p>
                 <div class="form-group">
                   <label for="exampleInputFile">File input</label>
@@ -37,10 +39,10 @@
               <div class="card-footer">
                 <button type="submit" class="btn btn-primary">Submit</button>
                 <span>&nbsp;</span>
-                <span class="small red">[$msg]</span>
+                <span class="small red">[$msg|escape]</span>
 
                 [if $FileUpload neq ""]
-                 Last uploaded file: <a href="[$baseurl]uploads/[$FileUpload]" target=_blank>[$FileUpload]</a>. You can <a href="[$baseurl]download/[$FileUpload]">Downloard Here.</a>
+                 Last uploaded file: <a href="[$baseurl]uploads/[$FileUpload|escape]" target=_blank>[$FileUpload|escape]</a>. You can <a href="[$baseurl]download/[$FileUpload|escape]">Download Here.</a>
                 [/if]
                 
               </div>

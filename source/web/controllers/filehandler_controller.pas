@@ -5,7 +5,7 @@ unit filehandler_controller;
 interface
 
 uses
-  Classes, SysUtils, html_lib, fpcgi, fpjson, json_lib, HTTPDefs,
+  Classes, SysUtils, html_lib, fastplaz_app, fpjson, json_lib, HTTPDefs,
   fastplaz_handler, database_lib, string_helpers, dateutils,
   datetime_helpers, array_helpers;
 
@@ -28,11 +28,7 @@ type
 
 implementation
 
-uses theme_controller, common;
-
-const
-  UPLOAD_FOLDERS = 'uploads/';
-  permittedFileType: array [0..3] of string = ('.jpg', '.jpeg', '.png', '.pdf');
+uses theme_controller, common, fileupload_lib;
 
 constructor TFilehandlerController.CreateNew(AOwner: TComponent; CreateMode: integer);
 begin
@@ -53,12 +49,10 @@ end;
 
 // GET Method Handler
 procedure TFilehandlerController.Get;
-var
-  msg: string;
-  fileListAsArray: TJSONArray;
 begin
-  msg := _SESSION['msg'];
-  ThemeUtil.Assign('$msg', msg);
+  // the message is shown once; the template escapes both values
+  ThemeUtil.Assign('$msg', _SESSION['msg']);
+  _SESSION['msg'] := '';
   ThemeUtil.Assign('$FileUpload', _SESSION['fileupload']);
 
   Tags['maincontent'] := @Tag_MainContent_Handler; //<<-- tag maincontent handler
@@ -68,9 +62,17 @@ end;
 // POST Method Handler
 procedure TFilehandlerController.Post;
 var
-  i: integer;
-  targetPath, msg: string;
+  i, uploaded, rejected: integer;
+  targetName, msg: string;
 begin
+  // token from [csrf-token name="frmUpload"] in main.html
+  if not isValidCSRF then
+  begin
+    _SESSION['msg'] := 'Formulir kedaluwarsa, silakan coba lagi.';
+    Redirect('./');
+    Exit; // Redirect does not leave the method
+  end;
+
   if Request.Files.Count = 0 then
   begin
     _SESSION['msg'] := 'Pastikan sudah memilih file yang diupload.';
@@ -79,24 +81,42 @@ begin
     Exit;
   end;
 
-  msg := '';
-  targetPath := IncludeTrailingPathDelimiter(GetCurrentDir) + UPLOAD_FOLDERS;
+  uploaded := 0;
+  rejected := 0;
   for i := 0 to Request.Files.Count - 1 do
   begin
-    // only for permitted file type
-    if not ((ExtractFileExt(Request.Files[i].FileName)) in permittedFileType) then
+    // the input was left empty
+    if Request.Files[i].FileName = '' then
       Continue;
 
-    if not FileCopy(Request.Files[i].LocalFileName, targetPath +
-      Request.Files[i].FileName) then
+    // only for permitted file type (case insensitive)
+    if (Request.Files[i].Size = 0) or
+      not IsPermittedFileType(Request.Files[i].FileName) then
     begin
-      // failed
-      // TODO: add error handling
+      Inc(rejected);
+      Continue;
     end;
 
-    _SESSION['fileupload'] := Request.Files[i].FileName;
+    // never trust the client's file name: no path, safe characters only,
+    // and an existing file is not overwritten
+    targetName := UniqueUploadFileName(Request.Files[i].FileName);
+    if targetName.IsEmpty or
+      not FileCopy(Request.Files[i].LocalFileName, UploadDir + targetName) then
+    begin
+      Inc(rejected);
+      Continue;
+    end;
+
+    Inc(uploaded);
+    _SESSION['fileupload'] := targetName;
   end;
 
+  msg := '';
+  if rejected > 0 then
+    msg := IntToStr(rejected) +
+      ' file gagal diupload. File yang diperbolehkan: .jpg, .jpeg, .png, .pdf'
+  else if uploaded = 0 then
+    msg := 'Pastikan sudah memilih file yang diupload.';
   _SESSION['msg'] := msg;
   Redirect('./');
 end;
@@ -108,4 +128,3 @@ begin
 end;
 
 end.
-

@@ -5,7 +5,7 @@ unit download_controller;
 interface
 
 uses
-  Classes, SysUtils, html_lib, fpcgi, fpjson, json_lib, HTTPDefs,
+  Classes, SysUtils, html_lib, fastplaz_app, fpjson, json_lib, HTTPDefs,
   fastplaz_handler, database_lib, string_helpers, dateutils, datetime_helpers;
 
 type
@@ -17,15 +17,11 @@ type
     destructor Destroy; override;
 
     procedure Get; override;
-    procedure Post; override;
   end;
 
 implementation
 
-uses theme_controller, common;
-
-const
-  UPLOAD_FOLDERS = 'uploads/';
+uses theme_controller, common, fileupload_lib;
 
 constructor TDownloadController.CreateNew(AOwner: TComponent; CreateMode: integer);
 begin
@@ -47,32 +43,39 @@ end;
 // GET Method Handler
 procedure TDownloadController.Get;
 var
-  fileName: string;
-  imgStream: TFileStream;
+  fileName, filePath: string;
+  fileStream: TFileStream;
 begin
   //TODO: Check Priviledge
 
   fileName := _GET['filename'];
   if fileName.IsEmpty then
-    Die('Invalid Request');
-  if not FileExists(UPLOAD_FOLDERS + fileName) then
-    Die('File not exists.');
+  begin
+    Die('Invalid Request', 400);
+    Exit; // Die does not leave the method
+  end;
 
-  imgStream := TFileStream.Create(UPLOAD_FOLDERS + fileName, fmOpenRead);
-  Response.ContentStream := imgStream;
+  // only a plain, permitted file name inside uploads/ (no "../", no path)
+  filePath := UploadedFilePath(fileName);
+  if filePath.IsEmpty then
+  begin
+    Die('Invalid file name.', 400);
+    Exit;
+  end;
+  if not FileExists(filePath) then
+  begin
+    Die('File not exists.', 404);
+    Exit;
+  end;
 
-  Response.ContentType := 'image/' + ExtractFileExt(fileName);
-  Response.SendContent;
-
-  imgStream.Free;
-end;
-
-// POST Method Handler
-procedure TDownloadController.Post;
-begin
-  Response.Content := 'This is POST Method';
+  fileStream := TFileStream.Create(filePath, fmOpenRead or fmShareDenyWrite);
+  // the response frees the stream after it has been sent
+  Response.FreeContentStream := True;
+  Response.ContentStream := fileStream;
+  Response.ContentType := ContentTypeOf(fileName);
+  // force download
+  CustomHeader['Content-Disposition'] := 'attachment; filename="' + fileName + '"';
+  CustomHeader['X-Content-Type-Options'] := 'nosniff';
 end;
 
 end.
-
-

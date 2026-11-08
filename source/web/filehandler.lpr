@@ -3,15 +3,15 @@ program filehandler;
 {$mode objfpc}{$H+}
 
 uses
-  {$IFNDEF Windows}cthreads,{$ENDIF}
-  fpcgi, sysutils, fastplaz_handler, common, filehandler_controller,
+  {$IFNDEF Windows}cthreads, {$ENDIF}
+  fastplaz_app, sysutils, fastplaz_handler, common, filehandler_controller,
   filehandler_routes, download_controller;
 
 {$R *.res}
 
 begin
-  Application.Title:='File Upload Handler Examper';
-  Application.Email := string( Config.GetValue(_SYSTEM_WEBMASTER_EMAIL,UTF8Decode('webmaster@' + GetEnvironmentVariable('SERVER_NAME'))));
+  Application.Title := string( Config.GetValue(_SYSTEM_SITENAME, 'File Upload Handler Example'));
+  Application.Email := string( Config.GetValue(_SYSTEM_WEBMASTER_EMAIL,'webmaster@' + GetEnvironmentVariable('SERVER_NAME')));
   Application.DefaultModuleName := string( Config.GetValue(_SYSTEM_MODULE_DEFAULT, 'main'));
   Application.ModuleVariable := string( Config.GetValue(_SYSTEM_MODULE_VARIABLE, 'mod'));
   Application.AllowDefaultModule := True;
@@ -20,9 +20,12 @@ begin
 
   Application.OnGetModule := @FastPlasAppandler.OnGetModule;
   Application.PreferModuleName := True;
-  {$if FPC_FULlVERSION >= 30004}
+  {$if FPC_FULLVERSION >= 30004}
   Application.LegacyRouting := True;
   {$endif}
+
+  // startup banner, standalone mode only; see OnStandaloneBanner to change it
+  ShowStandaloneBanner;
 
   Application.Initialize;
   Application.Run;
