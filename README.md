@@ -50,7 +50,7 @@ Arahkan document root ke `public_html`. Rule di `.htaccess` sudah meneruskan req
 ## Tautan
 
 - [FastPlaz - Pascal Web Framework](https://fastplaz.com) 
-- [Pascal Indonesia Web Forum](https://pascal-id.org)
+- [Pascal Indonesia Web Forum](https://pascal-dev.org)
 
 
 ![File Upload with Pascal](docs/images/screenshot.png)
